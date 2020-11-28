@@ -6,50 +6,39 @@
  * contain code that should be seen on all pages. (e.g. navigation bar)
  */
 
+import 'bootstrap/dist/css/bootstrap.min.css';
+import Layout from 'components/Layout/Admin/Main';
+import DashboardPage from 'containers/AdminPage/DashboardPage/Loadable';
 import React from 'react';
 import { Helmet } from 'react-helmet';
-import styled from 'styled-components';
-import { Switch, Route } from 'react-router-dom';
+import { Route } from 'react-router-dom';
 
-import HomePage from 'containers/HomePage/Loadable';
-import FeaturePage from 'containers/FeaturePage/Loadable';
-import NotFoundPage from 'containers/NotFoundPage/Loadable';
-import Header from 'components/Header';
-import Footer from 'components/Footer';
-import ProductPage from 'containers/Product/index';
-import CreateProductPage from 'containers/Product/CreateProduct/index';
-
-
-import GlobalStyle from '../../global-styles';
-import 'bootstrap/dist/css/bootstrap.min.css';
-const AppWrapper = styled.div`
-  max-width: calc(768px + 16px * 2);
-  margin: 0 auto;
-  display: flex;
-  min-height: 100%;
-  padding: 0 16px;
-  flex-direction: column;
-`;
+const LayoutMain = props => {
+  const { component: Component, ...rest } = props;
+  return (
+    <Route
+      {...rest}
+      render={matchProps => {
+        return (
+          <Layout>
+            <Component {...matchProps} />
+          </Layout>
+        );
+      }}
+    />
+  );
+};
 
 export default function App() {
   return (
-    <AppWrapper>
+    <React.Fragment>
       <Helmet
         titleTemplate="%s - React.js Boilerplate"
-        defaultTitle="React.js Boilerplate"
+        defaultTitle="Trang chủ"
       >
-        <meta name="description" content="A React.js Boilerplate application" />
+        <meta name="description" content="Trang chủ" />
       </Helmet>
-      <Header />
-      <Switch>
-        <Route exact path="/" component={HomePage} />
-        <Route path="/features" component={FeaturePage} />
-        <Route path="/product" component={ProductPage} />
-        <Route path="/product-create" component={CreateProductPage} />
-        <Route path="" component={NotFoundPage} />
-      </Switch>
-      <Footer />
-      <GlobalStyle />
-    </AppWrapper>
+      <LayoutMain exact path="/" component={DashboardPage} />
+    </React.Fragment>
   );
 }
