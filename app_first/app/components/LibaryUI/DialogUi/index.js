@@ -4,19 +4,17 @@
  *
  */
 
+import Dialog from '@material-ui/core/Dialog';
 import React, { memo } from 'react';
-// import PropTypes from 'prop-types';
-// import styled from 'styled-components';
 
-import { FormattedMessage } from 'react-intl';
-import messages from './messages';
+import Slide from '@material-ui/core/Slide';
 
-function DialogUi() {
-  return (
-    <div>
-      <FormattedMessage {...messages.header} />
-    </div>
-  );
+const Transition = React.forwardRef(function Transition(props, ref) {
+  return <Slide direction="left" ref={ref} {...props} />;
+});
+
+function DialogUi(props) {
+  return <Dialog TransitionComponent={Transition} keepMounted {...props} />;
 }
 
 DialogUi.propTypes = {};
